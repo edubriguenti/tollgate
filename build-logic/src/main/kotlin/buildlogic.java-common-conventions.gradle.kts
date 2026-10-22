@@ -12,16 +12,13 @@ repositories {
     mavenCentral()
 }
 
+val libs = the<VersionCatalogsExtension>().named("libs")
+
 dependencies {
-    constraints {
-        // Define dependency versions as constraints
-        implementation("org.apache.commons:commons-text:1.14.0")
-    }
-
-    // Use JUnit Jupiter for testing.
-    testImplementation("org.junit.jupiter:junit-jupiter:6.0.1")
-
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation(platform(libs.findLibrary("junit-bom").get()))
+    testImplementation(libs.findLibrary("junit-jupiter").get())
+    testImplementation(libs.findLibrary("assertj-core").get())
+    testRuntimeOnly(libs.findLibrary("junit-launcher").get())
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

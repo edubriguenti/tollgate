@@ -12,5 +12,5 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = "dev.tollgate.app.App"
+    mainClass = "dev.tollgate.simulator.Simulator"
 }
