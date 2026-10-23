@@ -1,11 +1,14 @@
 package dev.tollgate.simulator;
 
-import org.assertj.core.api.Assertions;
+import dev.tollgate.domain.Billing;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 class SimulatorTest {
+
     @Test
-    void testSimulator() {
-        Assertions.assertThat(Simulator.message()).isEqualTo("Hello, World!");
+    void sampleCallIsBillable() {
+        assertThat(Billing.billableUnits(Simulator.sampleCall())).isEqualTo(2);
     }
 }
