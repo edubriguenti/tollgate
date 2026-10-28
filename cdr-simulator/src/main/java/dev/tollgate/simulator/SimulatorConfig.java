@@ -3,7 +3,7 @@ package dev.tollgate.simulator;
 import java.time.Duration;
 import java.util.Objects;
 
-public record SimulatorConfig(int subscribers, Duration meanInterval, Duration runFor, double smsRatio) {
+public record SimulatorConfig(int subscribers, Duration meanInterval, Duration runFor, double smsRatio, FraudMix fraudMix) {
 
     public SimulatorConfig {
         if (subscribers < 1) {
@@ -11,6 +11,11 @@ public record SimulatorConfig(int subscribers, Duration meanInterval, Duration r
         }
         Objects.requireNonNull(meanInterval, "meanInterval");
         Objects.requireNonNull(runFor, "runFor");
+        Objects.requireNonNull(fraudMix, "fraudMix");
+        if (fraudMix.total() > subscribers) {
+            throw new IllegalArgumentException(
+                    "fraudMix total (%d) exceeds subscribers (%d)".formatted(fraudMix.total(), subscribers));
+        }
         if (!meanInterval.isPositive()) {
             throw new IllegalArgumentException("meanInterval must be positive: " + meanInterval);
         }
